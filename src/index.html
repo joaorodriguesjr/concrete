@@ -1,26 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Concrete Mix Calculator</title>
+    <!-- Prevent Flash of Unstyled Theme: runs before render -->
+    <script>
+        (function () {
+            const stored = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = stored || (prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
-    <header>
-        <h1>Concrete Mix Calculator</h1>
-    </header>
-    
-    <main id="app">
-        <!-- Application UI will be built here -->
-    </main>
+    <div id="app">
+        <header class="card">
+            <div class="header-bar">
+                <div>
+                    <h1 class="card-title" style="margin-bottom: 0.5rem; font-size: var(--text-2xl);">
+                        <i data-lucide="calculator" style="color: var(--color-primary-600);"></i>
+                        Concrete Mix Calculator
+                    </h1>
+                    <p style="font-size: var(--text-sm);">Calculate materials needed for your project accurately.</p>
+                </div>
+                <button id="theme-toggle" class="btn-theme-toggle" aria-label="Toggle dark/light mode"
+                    title="Toggle dark/light mode">
+                    <i data-lucide="sun" id="theme-icon-light" style="width: 18px; height: 18px;"></i>
+                    <i data-lucide="moon" id="theme-icon-dark" style="width: 18px; height: 18px; display: none;"></i>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Structure Type (story_001) -->
+            <section class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i data-lucide="layers" style="color: var(--color-primary-500); width: 20px;"></i>
+                        Structure Type
+                    </h2>
+                </div>
+                <div class="radio-group" id="mix-selection">
+                    <label class="radio-card">
+                        <input type="radio" name="mix" value="high_strength" checked>
+                        <div class="radio-card-title">Slab / Pillar / Beam</div>
+                        <div class="radio-card-desc">High strength (1 : 2 : 3)</div>
+                    </label>
+                    <label class="radio-card">
+                        <input type="radio" name="mix" value="medium_strength">
+                        <div class="radio-card-title">Subfloor / Sidewalk</div>
+                        <div class="radio-card-desc">Medium strength (1 : 3 : 4)</div>
+                    </label>
+                    <label class="radio-card">
+                        <input type="radio" name="mix" value="foundation">
+                        <div class="radio-card-title">Foundation / Footing</div>
+                        <div class="radio-card-desc">High strength (1 : 2.5 : 4)</div>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Dimensions Placeholders to test layout -->
+            <section class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i data-lucide="ruler" style="color: var(--color-primary-500); width: 20px;"></i>
+                        Dimensions
+                    </h2>
+                </div>
+                <div class="grid-responsive">
+                    <div class="form-group">
+                        <label class="form-label" for="width">Width (m)</label>
+                        <input type="number" id="width" class="form-input" inputmode="decimal" placeholder="e.g. 5.5">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="length">Length (m)</label>
+                        <input type="number" id="length" class="form-input" inputmode="decimal" placeholder="e.g. 4.0">
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <button class="btn btn-primary btn-full">
+                    <i data-lucide="clipboard-copy" style="width: 20px;"></i> Copy Results
+                </button>
+            </section>
+        </main>
+    </div>
 
     <!-- Data structures and constants -->
     <script src="js/data.js"></script>
-    
+
     <!-- Main application logic -->
     <script src="js/app.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // ---- Theme Toggle Logic ----
+        (function () {
+            const html = document.documentElement;
+            const btn = document.getElementById('theme-toggle');
+            const iconLight = document.getElementById('theme-icon-light');
+            const iconDark = document.getElementById('theme-icon-dark');
+            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+            function applyTheme(theme) {
+                html.setAttribute('data-theme', theme);
+                // Sun icon visible in dark mode (click to go light),
+                // Moon icon visible in light mode (click to go dark)
+                const isDark = theme === 'dark';
+                iconLight.style.display = isDark ? 'block' : 'none';
+                iconDark.style.display = isDark ? 'none' : 'block';
+            }
+
+            function getEffectiveTheme() {
+                return localStorage.getItem('theme') ||
+                    (mediaQuery.matches ? 'dark' : 'light');
+            }
+
+            // Apply correct icon state on load
+            applyTheme(getEffectiveTheme());
+
+            // Toggle on button click and persist choice
+            btn.addEventListener('click', function () {
+                const current = html.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                localStorage.setItem('theme', next);
+                applyTheme(next);
+            });
+
+            // React to system preference change (only if user hasn't overridden)
+            mediaQuery.addEventListener('change', function (e) {
+                if (!localStorage.getItem('theme')) {
+                    applyTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+        })();
+    </script>
 </body>
+
 </html>

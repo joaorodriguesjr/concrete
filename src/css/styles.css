@@ -1,26 +1,460 @@
-/* Concrete Mix Calculator - Main Styles */
+/* Concrete Mix Calculator - Design System */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-    /* Design system variables will be defined here */
-    --primary-color: #3b82f6;
+    /* Colors - Base */
+    --color-white: #ffffff;
+    --color-black: #0f172a;
+
+    /* Colors - Grays (Concrete theme) */
+    --color-gray-50: #f8fafc;
+    --color-gray-100: #f1f5f9;
+    --color-gray-200: #e2e8f0;
+    --color-gray-300: #cbd5e1;
+    --color-gray-400: #94a3b8;
+    --color-gray-500: #64748b;
+    --color-gray-600: #475569;
+    --color-gray-700: #334155;
+    --color-gray-800: #1e293b;
+    --color-gray-900: #0f172a;
+
+    /* Colors - Primary (Builder Blue) */
+    --color-primary-50: #eff6ff;
+    --color-primary-100: #dbeafe;
+    --color-primary-500: #3b82f6;
+    --color-primary-600: #2563eb;
+    --color-primary-700: #1d4ed8;
+
+    /* Colors - Semantic */
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
+
+    /* Typography */
+    --font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* Fluid font sizes */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+
+    /* Spacing */
+    --space-0: 0;
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+    /* Border Radius */
+    --radius-sm: 0.375rem;
+    --radius-base: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-full: 9999px;
+
+    /* Transitions */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    /* === Semantic Tokens (Light Mode defaults) === */
+    --bg-page: var(--color-gray-50);
+    --bg-surface: var(--color-white);
+    --bg-surface-hover: var(--color-gray-50);
+    --bg-surface-active: var(--color-primary-50);
+
+    --border-color: var(--color-gray-200);
+    --border-color-subtle: var(--color-gray-100);
+    --border-color-focus: var(--color-primary-500);
+    --border-color-active: var(--color-primary-500);
+
+    --text-primary: var(--color-gray-900);
+    --text-secondary: var(--color-gray-600);
+    --text-muted: var(--color-gray-500);
+    --text-placeholder: var(--color-gray-400);
+    --text-on-primary: var(--color-white);
+
+    --focus-ring: var(--color-primary-100);
 }
+
+/* Dark Mode via System Preference */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-page: var(--color-gray-900);
+        --bg-surface: var(--color-gray-800);
+        --bg-surface-hover: var(--color-gray-700);
+        --bg-surface-active: #1e3a5f;
+
+        --border-color: var(--color-gray-700);
+        --border-color-subtle: #243248;
+        --border-color-active: var(--color-primary-500);
+
+        --text-primary: var(--color-gray-50);
+        --text-secondary: var(--color-gray-400);
+        --text-muted: var(--color-gray-500);
+        --text-placeholder: var(--color-gray-600);
+
+        --focus-ring: rgba(59, 130, 246, 0.2);
+    }
+}
+
+/* Dark Mode via manual toggle ([data-theme="dark"] on <html>) */
+[data-theme="dark"] {
+    --bg-page: var(--color-gray-900);
+    --bg-surface: var(--color-gray-800);
+    --bg-surface-hover: var(--color-gray-700);
+    --bg-surface-active: #1e3a5f;
+
+    --border-color: var(--color-gray-700);
+    --border-color-subtle: #243248;
+    --border-color-active: var(--color-primary-500);
+
+    --text-primary: var(--color-gray-50);
+    --text-secondary: var(--color-gray-400);
+    --text-muted: var(--color-gray-500);
+    --text-placeholder: var(--color-gray-600);
+
+    --focus-ring: rgba(59, 130, 246, 0.2);
+}
+
+/* Light Mode override (explicit, reverts system dark preference) */
+[data-theme="light"] {
+    --bg-page: var(--color-gray-50);
+    --bg-surface: var(--color-white);
+    --bg-surface-hover: var(--color-gray-50);
+    --bg-surface-active: var(--color-primary-50);
+
+    --border-color: var(--color-gray-200);
+    --border-color-subtle: var(--color-gray-100);
+    --border-color-active: var(--color-primary-500);
+
+    --text-primary: var(--color-gray-900);
+    --text-secondary: var(--color-gray-600);
+    --text-muted: var(--color-gray-500);
+    --text-placeholder: var(--color-gray-400);
+
+    --focus-ring: var(--color-primary-100);
+}
+
+/* ==========================================================================
+   CSS Reset & Base Styles
+   ========================================================================== */
 
 *,
 *::before,
 *::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
 }
 
 body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9fafb;
-    color: #1f2937;
+    font-family: var(--font-family-base);
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color var(--transition-base), color var(--transition-base);
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--text-primary);
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+p {
+    color: var(--text-secondary);
+}
+
+a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--color-primary-700);
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+/* ==========================================================================
+   Layout Components
+   ========================================================================== */
 
 #app {
     max-width: 800px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: var(--space-4);
+}
+
+.grid-responsive {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-4);
+}
+
+/* ==========================================================================
+   Cards & Containers
+   ========================================================================== */
+
+.card {
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-6);
+    margin-bottom: var(--space-6);
+    border: 1px solid var(--border-color);
+    transition: background-color var(--transition-base), border-color var(--transition-base);
+}
+
+.card-header {
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border-color-subtle);
+}
+
+.card-title {
+    font-size: var(--text-lg);
+    color: var(--text-primary);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+/* ==========================================================================
+   Form Elements
+   ========================================================================== */
+
+.form-group {
+    margin-bottom: var(--space-4);
+}
+
+.form-label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+}
+
+.form-input {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    outline: none;
+}
+
+.form-input:focus {
+    border-color: var(--border-color-focus);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.form-input::placeholder {
+    color: var(--text-placeholder);
+}
+
+/* ==========================================================================
+   Radio Cards (Mix Selection)
+   ========================================================================== */
+
+.radio-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+}
+
+.radio-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-4);
+    background-color: var(--bg-surface);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    min-height: 48px;
+}
+
+.radio-card:hover {
+    border-color: var(--text-muted);
+    background-color: var(--bg-surface-hover);
+}
+
+.radio-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.radio-card:has(input[type="radio"]:focus-visible) {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+}
+
+.radio-card:has(input[type="radio"]:checked) {
+    border-color: var(--border-color-active);
+    background-color: var(--bg-surface-active);
+    box-shadow: 0 0 0 1px var(--border-color-active);
+}
+
+.radio-card-title {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: var(--text-base);
+    margin-bottom: var(--space-1);
+}
+
+.radio-card-desc {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--text-base);
+    font-weight: 500;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border: none;
+    background: none;
+    min-height: 48px;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+}
+
+.btn-primary {
+    background-color: var(--color-primary-600);
+    color: var(--color-white);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-700);
+}
+
+.btn-primary:active {
+    background-color: var(--color-primary-800);
+    transform: translateY(1px);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--bg-surface-hover);
+    color: var(--text-primary);
+}
+
+.btn-outline:active {
+    background-color: var(--border-color);
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* ==========================================================================
+   Theme Toggle Button
+   ========================================================================== */
+
+.btn-theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: var(--radius-full);
+    background: var(--bg-surface-hover);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.btn-theme-toggle:hover {
+    background: var(--border-color);
+    color: var(--text-primary);
+}
+
+.btn-theme-toggle:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Header Layout (title + toggle side by side)
+   ========================================================================== */
+
+.header-bar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
 }
