@@ -17,7 +17,7 @@
 - [x] **story_006:** Instant Real-Time Recalculation
 
 ## Epic 4: Results & Export
-- [ ] **story_008:** Display Shopping List (Results)
-- [ ] **story_009:** Empty & Partial Input States
-- [ ] **story_010:** Copy to Clipboard Export
-- [ ] **story_011:** Offline Support (PWA)
+- [x] **story_008:** Display Shopping List (Results)
+- [x] **story_009:** Empty & Partial Input States
+- [x] **story_010:** Copy to Clipboard Export
+- [x] **story_011:** Offline Support (PWA)

@@ -484,6 +484,18 @@ textarea {
     font-weight: 500;
 }
 
+.material-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.material-subtext {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-primary-600);
+}
+
 .material-value {
     font-size: var(--text-xl);
     font-weight: 700;
@@ -597,4 +609,33 @@ textarea {
 .form-input.invalid {
     border-color: var(--color-error);
     box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Toast Feedback */
+.toast {
+    position: fixed;
+    bottom: var(--space-8);
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background-color: var(--color-gray-800);
+    color: var(--color-white);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+[data-theme="dark"] .toast {
+    background-color: var(--color-primary-600);
 }

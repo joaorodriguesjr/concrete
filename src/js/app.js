@@ -138,50 +138,148 @@ function calculateMaterials(inputs) {
     return {
         mixName: mix ? mix.name : '-',
         cementBags: cementBags,
-        sandCans: sandCans.toFixed(2),
-        gravelCans: gravelCans.toFixed(2),
-        waterLiters: waterLiters.toFixed(2),
+        sandM3: volSand.toFixed(3),
+        sandCans: Math.ceil(sandCans),
+        gravelM3: volGravel.toFixed(3),
+        gravelCans: Math.ceil(gravelCans),
+        waterLiters: Math.ceil(waterLiters),
         hasVolume: true,
-        totalVolume: vdp
+        totalVolume: vdp.toFixed(3),
+        wasteMargin: inputs.wasteMargin
     };
 }
 
-function renderResults(results) {
-    const emptyState = document.getElementById('empty-state');
+function renderResults(results, inputs) {
+    const resultsMsg = document.getElementById('results-messages');
+    const msgText = document.getElementById('results-msg-text');
     const resultsPanel = document.getElementById('calculation-results');
 
-    if (results.hasVolume) {
-        emptyState.style.display = 'none';
+    // story_009: Empty & Partial States logic
+    let stateMessage = "";
+    let isPartial = false;
+
+    if (inputs.calculationMode === 'dimensions') {
+        const hasWidth = inputs.width > 0;
+        const hasLength = inputs.length > 0;
+        const hasThickness = inputs.thickness > 0;
+
+        if (!hasWidth && !hasLength && !hasThickness) {
+            stateMessage = "Fill in the measurements above to see the materials list";
+        } else if (!hasWidth || !hasLength || !hasThickness) {
+            stateMessage = "Fill in all three dimensions to calculate";
+            isPartial = true;
+        }
+    } else {
+        if (inputs.directVolume <= 0) {
+            stateMessage = "Fill in the total volume to see the materials list";
+        }
+    }
+
+    if (results.hasVolume && !isPartial) {
+        resultsMsg.style.display = 'none';
         resultsPanel.style.display = 'block';
 
-        // For Epic 1, we just show something to prove it's working
-        document.getElementById('res-cement').textContent = results.cementBags || '-';
-        document.getElementById('res-sand').textContent = results.sandCans || '-';
-        document.getElementById('res-gravel').textContent = results.gravelCans || '-';
-        document.getElementById('res-water').textContent = results.waterLiters || '-';
+        // story_008: Display with commercial units
+        document.getElementById('res-cement').textContent = results.cementBags;
+        document.getElementById('res-sand-m3').textContent = results.sandM3;
+        document.getElementById('res-sand-cans').textContent = results.sandCans;
+        document.getElementById('res-gravel-m3').textContent = results.gravelM3;
+        document.getElementById('res-gravel-cans').textContent = results.gravelCans;
+        document.getElementById('res-water').textContent = results.waterLiters;
     } else {
-        emptyState.style.display = 'block';
+        resultsMsg.style.display = 'block';
+        msgText.textContent = stateMessage || "Enter dimensions to see results.";
         resultsPanel.style.display = 'none';
     }
 }
 
 function copyToClipboard() {
-    // Builds formatted string and copies to the clipboard
+    const inputs = getInputs();
+    const results = calculateMaterials(inputs);
+
+    if (!results.hasVolume) return;
+
+    // story_010: Formatted text for export
+    const text = `
+🚧 *Concrete Mix Results* 🚧
+---------------------------
+📍 Structure: ${results.mixName}
+📐 Total Volume: ${results.totalVolume} m³ (inc. ${results.wasteMargin}% waste)
+
+🛒 *Shopping List:*
+- Cement: ${results.cementBags} bags (50kg)
+- Sand: ${results.sandM3} m³ (${results.sandCans} cans)
+- Gravel: ${results.gravelM3} m³ (${results.gravelCans} cans)
+- Water: ${results.waterLiters} Liters
+
+*Calculated via Concrete Mix Calculator*
+    `.trim();
+
     try {
-        const text = `Calculated Materials...`;
         navigator.clipboard.writeText(text).then(() => {
-            console.log('Copied to clipboard');
+            showToast("Copied to clipboard!");
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+            // Fallback for some browsers
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showToast("Copied to clipboard!");
+            } catch (e) {
+                alert("Failed to copy. Please copy manually.");
+            }
+            document.body.removeChild(textArea);
         });
     } catch (err) {
-        console.error('Failed to copy', err);
+        console.error('Clipboard API failed', err);
     }
+}
+
+function showToast(message) {
+    let toast = document.getElementById('toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        toast.className = 'toast';
+        document.body.appendChild(toast);
+    }
+
+    toast.innerHTML = `<i data-lucide="check-circle" style="width: 18px; height: 18px;"></i> ${message}`;
+    if (typeof lucide !== 'undefined') lucide.createIcons({ attrs: { 'data-lucide': 'check-circle' } });
+
+    toast.classList.add('show');
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 2000);
 }
 
 function calculateAndRender() {
     const inputs = getInputs();
     const results = calculateMaterials(inputs);
-    renderResults(results);
+    renderResults(results, inputs);
 }
 
 // Initialize application when DOM is ready
-document.addEventListener('DOMContentLoaded', initApp);
+document.addEventListener('DOMContentLoaded', () => {
+    initApp();
+
+    // Register Service Worker for PWA (story_011)
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').then(registration => {
+                console.log('SW registered: ', registration);
+            }).catch(registrationError => {
+                console.log('SW registration failed: ', registrationError);
+            });
+        });
+    }
+
+    // Bind copy button (story_010)
+    const copyBtn = document.getElementById('copy-btn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', copyToClipboard);
+    }
+});

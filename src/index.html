@@ -17,6 +17,8 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
 </head>
 
 <body>
@@ -152,8 +154,8 @@
                         </h2>
                     </div>
 
-                    <div id="empty-state" class="empty-state">
-                        <p>Enter dimensions to see results.</p>
+                    <div id="results-messages" class="empty-state">
+                        <p id="results-msg-text">Enter dimensions to see results.</p>
                     </div>
 
                     <div id="calculation-results" style="display: none;">
@@ -163,12 +165,18 @@
                                 <div class="material-value" id="res-cement">-</div>
                             </li>
                             <li class="material-item">
-                                <div class="material-label">Sand (18L cans)</div>
-                                <div class="material-value" id="res-sand">-</div>
+                                <div class="material-container">
+                                    <div class="material-label">Sand</div>
+                                    <div class="material-subtext"><span id="res-sand-m3">-</span> m³ / <span
+                                            id="res-sand-cans">-</span> cans (18L)</div>
+                                </div>
                             </li>
                             <li class="material-item">
-                                <div class="material-label">Gravel (18L cans)</div>
-                                <div class="material-value" id="res-gravel">-</div>
+                                <div class="material-container">
+                                    <div class="material-label">Gravel</div>
+                                    <div class="material-subtext"><span id="res-gravel-m3">-</span> m³ / <span
+                                            id="res-gravel-cans">-</span> cans (18L)</div>
+                                </div>
                             </li>
                             <li class="material-item">
                                 <div class="material-label">Water (liters)</div>
