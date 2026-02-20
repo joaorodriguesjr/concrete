@@ -11,6 +11,39 @@ function initApp() {
         input.addEventListener('change', calculateAndRender);
     });
 
+    // Toggle Logic for calculation mode
+    const modeRadios = document.querySelectorAll('input[name="calc-mode"]');
+    modeRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            const mode = e.target.value;
+            const dimSection = document.getElementById('dimensions-inputs');
+            const volSection = document.getElementById('volume-inputs');
+
+            if (mode === 'dimensions') {
+                dimSection.classList.remove('hidden');
+                volSection.classList.add('hidden');
+            } else {
+                dimSection.classList.add('hidden');
+                volSection.classList.remove('hidden');
+            }
+            calculateAndRender();
+        });
+    });
+
+    // Load persisted Waste Margin
+    const persistedMargin = localStorage.getItem('waste-margin');
+    if (persistedMargin) {
+        document.getElementById('waste-margin').value = persistedMargin;
+    }
+
+    // Persist and validate Waste Margin on change
+    document.getElementById('waste-margin').addEventListener('change', (e) => {
+        const val = parseFloat(e.target.value);
+        if (val >= 5 && val <= 20) {
+            localStorage.setItem('waste-margin', e.target.value);
+        }
+    });
+
     // Initialize icons
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
@@ -22,23 +55,57 @@ function initApp() {
 
 function getInputs() {
     const selectedMixNode = document.querySelector('input[name="mix"]:checked');
+    const calcModeNode = document.querySelector('input[name="calc-mode"]:checked');
     const widthNode = document.getElementById('width');
     const lengthNode = document.getElementById('length');
+    const thicknessNode = document.getElementById('thickness');
+    const directVolumeNode = document.getElementById('direct-volume');
+    const wasteMarginNode = document.getElementById('waste-margin');
+    const marginErrorNode = document.getElementById('margin-error');
 
+    const wasteMargin = parseFloat(wasteMarginNode.value) || 0;
+    const isMarginValid = wasteMargin >= 5 && wasteMargin <= 20;
+
+    // UI Validation Feedback
+    if (!isMarginValid) {
+        wasteMarginNode.classList.add('invalid');
+        marginErrorNode.classList.remove('hidden');
+    } else {
+        wasteMarginNode.classList.remove('invalid');
+        marginErrorNode.classList.add('hidden');
+    }
+
+    // Default values for Story 003
     return {
         selectedMix: selectedMixNode ? selectedMixNode.value : 'high_strength',
+        calculationMode: calcModeNode ? calcModeNode.value : 'dimensions',
         width: parseFloat(widthNode.value) || 0,
         length: parseFloat(lengthNode.value) || 0,
-        // Placeholders for future stories
-        thickness: 0.1,
-        wasteMargin: 5
+        thickness: parseFloat(thicknessNode.value) || 0,
+        directVolume: parseFloat(directVolumeNode.value) || 0,
+        wasteMargin: wasteMargin,
+        isMarginValid: isMarginValid
     };
 }
 
 function calculateMaterials(inputs) {
-    // Initial implementation for Epic 1: just return the mix name for now
-    // Full algorithm will be in Epic 3
     const mix = CONCRETE_MIXES[inputs.selectedMix];
+
+    // If margin is invalid, block calculation as per Story 005
+    if (!inputs.isMarginValid) {
+        return { hasVolume: false };
+    }
+
+    // Base volume calculation
+    let baseVolume = 0;
+    if (inputs.calculationMode === 'dimensions') {
+        baseVolume = inputs.width * inputs.length * inputs.thickness;
+    } else {
+        baseVolume = inputs.directVolume;
+    }
+
+    // Apply Waste Margin: VDP = VD + (VD * Margin%)
+    const volumeWithWaste = baseVolume * (1 + (inputs.wasteMargin / 100));
 
     return {
         mixName: mix ? mix.name : '-',
@@ -46,7 +113,8 @@ function calculateMaterials(inputs) {
         sandCans: 0,
         gravelCans: 0,
         waterLiters: mix ? mix.waterPerBag : 0,
-        hasVolume: inputs.width > 0 && inputs.length > 0
+        hasVolume: baseVolume > 0,
+        totalVolume: volumeWithWaste
     };
 }
 

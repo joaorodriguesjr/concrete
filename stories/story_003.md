@@ -7,11 +7,11 @@
 As a user calculating materials for a new structure, I want to input the physical dimensions (width, length, and thickness) of my project so that the system can automatically determine the required concrete volume.
 
 ## Acceptance Criteria
-- [ ] The system displays three distinct numeric fields: Width, Length, and Thickness (all in meters).
-- [ ] Dimensions Input Mode is the default active mode when the user opens the application.
-- [ ] The fields trigger the native mobile numeric keypad (using HTML attributes `type="number"`, `inputmode="decimal"`, and `pattern="[0-9]*"`).
-- [ ] The calculations for volume update instantly as the user types (oninput or onchange event).
-- [ ] The system accurately calculates `Volume = Width * Length * Thickness`.
+- [x] The system displays three distinct numeric fields: Width, Length, and Thickness (all in meters).
+- [x] Dimensions Input Mode is the default active mode when the user opens the application.
+- [x] The fields trigger the native mobile numeric keypad (using HTML attributes `type="number"`, `inputmode="decimal"`, and `pattern="[0-9]*"`).
+- [x] The calculations for volume update instantly as the user types (oninput or onchange event).
+- [x] The system accurately calculates `Volume = Width * Length * Thickness`.
 
 ## Technical Notes
 * Input values must be sanitized and parsed to floats before processing.

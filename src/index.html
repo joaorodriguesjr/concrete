@@ -41,6 +41,17 @@
         <main>
             <!-- Panel 1: Project Data -->
             <div id="project-data">
+                <!-- Calculation Mode Toggle (story_004) -->
+                <div class="mode-toggle-container">
+                    <div class="segmented-control">
+                        <input type="radio" name="calc-mode" id="mode-dimensions" value="dimensions" checked>
+                        <label for="mode-dimensions">Dimensions</label>
+                        <input type="radio" name="calc-mode" id="mode-volume" value="volume">
+                        <label for="mode-volume">Total Volume</label>
+                        <div class="segmented-control-bg"></div>
+                    </div>
+                </div>
+
                 <!-- Structure Type (story_001) -->
                 <section class="card">
                     <div class="card-header">
@@ -68,8 +79,8 @@
                     </div>
                 </section>
 
-                <!-- Dimensions Placeholders to test layout (story_003) -->
-                <section class="card">
+                <!-- Dimensions Inputs (story_003) -->
+                <section class="card active-mode-section" id="dimensions-inputs">
                     <div class="card-header">
                         <h2 class="card-title">
                             <i data-lucide="ruler" style="color: var(--color-primary-500); width: 20px;"></i>
@@ -79,14 +90,54 @@
                     <div class="grid-responsive">
                         <div class="form-group">
                             <label class="form-label" for="width">Width (m)</label>
-                            <input type="number" id="width" class="form-input" inputmode="decimal"
-                                placeholder="e.g. 5.5">
+                            <input type="number" id="width" class="form-input" inputmode="decimal" pattern="[0-9]*"
+                                min="0" step="0.01" placeholder="e.g. 5.5">
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="length">Length (m)</label>
-                            <input type="number" id="length" class="form-input" inputmode="decimal"
-                                placeholder="e.g. 4.0">
+                            <input type="number" id="length" class="form-input" inputmode="decimal" pattern="[0-9]*"
+                                min="0" step="0.01" placeholder="e.g. 4.0">
                         </div>
+                        <div class="form-group">
+                            <label class="form-label" for="thickness">Thickness (m)</label>
+                            <input type="number" id="thickness" class="form-input" inputmode="decimal" pattern="[0-9]*"
+                                min="0" step="0.01" placeholder="e.g. 0.10">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Direct Volume Input (story_004) -->
+                <section class="card hidden" id="volume-inputs">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i data-lucide="box" style="color: var(--color-primary-500); width: 20px;"></i>
+                            Total Volume
+                        </h2>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="direct-volume">Volume (m³)</label>
+                        <input type="number" id="direct-volume" class="form-input" inputmode="decimal" pattern="[0-9]*"
+                            min="0" step="0.001" placeholder="e.g. 2.25">
+                    </div>
+                </section>
+
+                <!-- Configuration (story_005) -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i data-lucide="settings-2" style="color: var(--color-primary-500); width: 20px;"></i>
+                            Configuration
+                        </h2>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="waste-margin">Waste Margin (%)</label>
+                        <div style="display: flex; align-items: center; gap: var(--space-2);">
+                            <input type="number" id="waste-margin" class="form-input" value="10" inputmode="numeric"
+                                min="5" max="20" step="1" style="max-width: 100px;">
+                            <span style="font-size: var(--text-sm); color: var(--text-secondary);">Suggested: 5% to
+                                20%</span>
+                        </div>
+                        <p id="margin-error" class="error-text hidden">Margin must be between 5% and 20%</p>
                     </div>
                 </section>
             </div>

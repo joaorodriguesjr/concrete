@@ -8,9 +8,9 @@
 - [x] **story_001:** Structure Type Selection (Mix)
 
 ## Epic 2: Data Entry & Validation
-- [ ] **story_003:** Dimensions Input Mode
-- [ ] **story_004:** Direct Volume Input Mode & Toggle
-- [ ] **story_005:** Waste Margin Configuration
+- [x] **story_003:** Dimensions Input Mode
+- [x] **story_004:** Direct Volume Input Mode & Toggle
+- [x] **story_005:** Waste Margin Configuration
 
 ## Epic 3: Calculation Engine
 - [ ] **story_007:** Mix Algorithm Processing
