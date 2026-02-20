@@ -82,7 +82,7 @@ JavaScript must follow a basic modular pattern, separating input capture, mathem
 
 * **Objective:** Read and sanitize values from the DOM.
 * **Return:** Object with `{ selectedMix, calculationMode, width, length, thickness, directVolume, wasteMargin }`.
-* **Handling:** Convert strings to floats and treat empty fields as 0.
+* **Handling:** Convert strings to floats and treat empty fields as 0. Validate `wasteMargin` is between 5 and 20; trigger a validation error if out of bounds.
 
 ### **calculateMaterials(inputs)**
 
