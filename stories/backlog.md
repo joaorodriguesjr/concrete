@@ -1,7 +1,7 @@
 # Project Backlog: Concrete Mix Calculator
 
 ## Initial Setup
-- [ ] Initialize repository structure (index.html, css/styles.css, js/app.js, js/data.js)
+- [x] Initialize repository structure (src/index.html, src/css/styles.css, src/js/app.js, src/js/data.js)
 
 ## Epic 1: Core UI & Structure
 - [ ] **story_002:** Application Layout & Responsive Design
