@@ -7,13 +7,13 @@
 As a user (Foreman or DIY constructor), I want to select the type of concrete structure (e.g., Slab, Subfloor, Foundation) so that the correct mix proportions are applied to my calculation.
 
 ## Acceptance Criteria
-- [ ] The interface provides single-selection buttons (Radio buttons or selectable Cards) for the application type.
-- [ ] The available options and their respective base mixes are:
+- [x] The interface provides single-selection buttons (Radio buttons or selectable Cards) for the application type.
+- [x] The available options and their respective base mixes are:
   - Slab / Pillar / Beam (High strength) -> 1 : 2 : 3
   - Subfloor / Sidewalk (Medium strength) -> 1 : 3 : 4
   - Foundation / Footing (High strength) -> 1 : 2.5 : 4
-- [ ] A default structure type is selected upon loading the application.
-- [ ] When the selection changes, the calculation is instantly re-triggered if valid inputs exist.
+- [x] A default structure type is selected upon loading the application.
+- [x] When the selection changes, the calculation is instantly re-triggered if valid inputs exist.
 
 ## Technical Notes
 * The concrete mix rules should be stored as an array of JSON objects (e.g., `CONCRETE_MIXES`) in `data.js` to allow easy expansion.

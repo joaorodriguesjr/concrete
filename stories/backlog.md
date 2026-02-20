@@ -4,8 +4,8 @@
 - [x] Initialize repository structure (src/index.html, src/css/styles.css, src/js/app.js, src/js/data.js)
 
 ## Epic 1: Core UI & Structure
-- [ ] **story_002:** Application Layout & Responsive Design
-- [ ] **story_001:** Structure Type Selection (Mix)
+- [x] **story_002:** Application Layout & Responsive Design
+- [x] **story_001:** Structure Type Selection (Mix)
 
 ## Epic 2: Data Entry & Validation
 - [ ] **story_003:** Dimensions Input Mode

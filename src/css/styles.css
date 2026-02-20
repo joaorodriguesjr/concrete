@@ -449,6 +449,65 @@ textarea {
 }
 
 /* ==========================================================================
+   Materials List (Results)
+   ========================================================================== */
+
+.empty-state {
+    padding: var(--space-8) var(--space-4);
+    text-align: center;
+    color: var(--text-muted);
+    background-color: var(--bg-surface-hover);
+    border-radius: var(--radius-md);
+    border: 2px dashed var(--border-color-subtle);
+}
+
+.materials-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+}
+
+.material-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-4);
+    background-color: var(--bg-surface-hover);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color-subtle);
+}
+
+.material-label {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.material-value {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-primary-600);
+}
+
+[data-theme="dark"] .material-value {
+    color: var(--color-primary-500);
+}
+
+/* Tablet and Desktop - keep single column as per story_002, 
+   but maybe adjust spacing if needed. 
+   The #app max-width: 800px already handles large screens. */
+@media (min-width: 640px) {
+    .materials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.results-card {
+    border-left: 4px solid var(--color-success);
+}
+
+/* ==========================================================================
    Header Layout (title + toggle side by side)
    ========================================================================== */
 

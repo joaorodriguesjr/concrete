@@ -5,44 +5,68 @@
 
 function initApp() {
     // Add Event Listeners ('input', 'change') to all form fields and radio buttons.
-    // Any event triggers the `calculateAndRender()` function.
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.addEventListener('input', calculateAndRender);
+        input.addEventListener('change', calculateAndRender);
+    });
 
     // Initialize icons
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
+
+    // Initial calculation
+    calculateAndRender();
 }
 
 function getInputs() {
-    // Read and sanitize values from the DOM
-    // Returns: { selectedMix, calculationMode, width, length, thickness, directVolume, wasteMargin }
-    // Handles conversion to floats and default fallbacks.
+    const selectedMixNode = document.querySelector('input[name="mix"]:checked');
+    const widthNode = document.getElementById('width');
+    const lengthNode = document.getElementById('length');
+
     return {
-        selectedMix: 'high_strength',
-        calculationMode: 'dimensions',
-        width: 0,
-        length: 0,
-        thickness: 0,
-        directVolume: 0,
+        selectedMix: selectedMixNode ? selectedMixNode.value : 'high_strength',
+        width: parseFloat(widthNode.value) || 0,
+        length: parseFloat(lengthNode.value) || 0,
+        // Placeholders for future stories
+        thickness: 0.1,
         wasteMargin: 5
     };
 }
 
 function calculateMaterials(inputs) {
-    // Implements the calculation algorithm
-    // Variables used: actualVolume, volumeWithWaste, dryVolume, totalParts, volumeOnePart
-    // Calculates cement bags, sand cans, and gravel cans based on CONSTANTS
+    // Initial implementation for Epic 1: just return the mix name for now
+    // Full algorithm will be in Epic 3
+    const mix = CONCRETE_MIXES[inputs.selectedMix];
 
     return {
+        mixName: mix ? mix.name : '-',
         cementBags: 0,
         sandCans: 0,
-        gravelCans: 0
+        gravelCans: 0,
+        waterLiters: mix ? mix.waterPerBag : 0,
+        hasVolume: inputs.width > 0 && inputs.length > 0
     };
 }
 
 function renderResults(results) {
-    // Updates specific HTML tags with the calculated values
-    // Toggles visibility of the 'Empty State' depending on actualVolume > 0
+    const emptyState = document.getElementById('empty-state');
+    const resultsPanel = document.getElementById('calculation-results');
+
+    if (results.hasVolume) {
+        emptyState.style.display = 'none';
+        resultsPanel.style.display = 'block';
+
+        // For Epic 1, we just show something to prove it's working
+        document.getElementById('res-cement').textContent = results.cementBags || '-';
+        document.getElementById('res-sand').textContent = results.sandCans || '-';
+        document.getElementById('res-gravel').textContent = results.gravelCans || '-';
+        document.getElementById('res-water').textContent = results.waterLiters || '-';
+    } else {
+        emptyState.style.display = 'block';
+        resultsPanel.style.display = 'none';
+    }
 }
 
 function copyToClipboard() {
