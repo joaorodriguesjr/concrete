@@ -13,8 +13,8 @@
 - [x] **story_005:** Waste Margin Configuration
 
 ## Epic 3: Calculation Engine
-- [ ] **story_007:** Mix Algorithm Processing
-- [ ] **story_006:** Instant Real-Time Recalculation
+- [x] **story_007:** Mix Algorithm Processing
+- [x] **story_006:** Instant Real-Time Recalculation
 
 ## Epic 4: Results & Export
 - [ ] **story_008:** Display Shopping List (Results)
