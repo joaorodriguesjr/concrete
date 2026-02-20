@@ -33,9 +33,9 @@ The system must allow the user to select the purpose of the concrete, which will
 
 The system must allow the input of measurements to calculate the volume.
 
-* **Mode 1 (Dimensions):** Three numeric fields (Width, Length, Thickness) in meters.
+* **Mode 1 (Dimensions):** Three numeric fields (Width, Length, Thickness) in meters. This is the default active mode.
 * **Mode 2 (Direct Volume):** A single numeric field (Total volume in m³), in case the user already knows this information.
-* **Behavior:** The system must have a toggle to switch between Mode 1 and Mode 2. Only the fields of the active mode should be visible.
+* **Behavior:** The system must have a toggle to switch between Mode 1 and Mode 2. Only the fields of the active mode should be visible. When toggling between modes, previously entered values and calculated volumes must be preserved.
 
 ### **FR-03: Waste Margin**
 
@@ -43,7 +43,7 @@ The system must apply a safety margin to the calculated total.
 
 * **Input:** Numeric field (percentage).
 * **Default Value:** 10%.
-* **Behavior:** The value must be a multiplier at the end of the volume calculation.
+* **Behavior:** The value must be a multiplier at the end of the volume calculation. Allowed values are between 5% and 20%. Out-of-range values must trigger a validation error instead of silent clamping.
 
 ### **FR-04: Real-Time Processing**
 
@@ -65,9 +65,9 @@ The math is based on the standard yield of the materials.
   3. Calculate Volume of Dry Materials (VMS) = VDP * 1.3.
   4. Sum the parts of the selected Mix (e.g., 1:2:3 = 6 total parts).
   5. Calculate the volume of 1 part = VMS / Total Parts.
-  6. **Cement:** Multiply 1 part by the cement proportion. Convert the volume to kg and then divide by 50 to get the number of bags (round up - Math.ceil).
-  7. **Sand and Gravel:** Multiply 1 part by the respective proportions. The result is in m³. For cans, divide the result in liters by 18.
-  8. **Water:** Apply the standard Water/Cement ratio (e.g., 30 liters per 50kg bag of cement, depending on the mix).
+  6. **Cement:** Multiply 1 part by the cement proportion. Convert the volume to kg (adjusting for Apparent Specific Mass by dividing by 1.2) and then divide by 50 to get the number of bags (round up - Math.ceil).
+  7. **Sand and Gravel:** Multiply 1 part by the respective proportions. The result is in m³. For cans, divide the result in liters by 18 (display as a decimal value, do not round up).
+  8. **Water:** Apply the specific Water/Cement ratio defined for each mix type (e.g., 30, 32, or 35 liters per 50kg bag of cement).
 
 ### **FR-06: Display Results**
 
@@ -78,7 +78,7 @@ The system must clearly display the shopping list.
   * Sand: Y m³ (or Z 18L cans).
   * Gravel: W m³ (or K 18L cans).
   * Water: L liters.
-* **Behavior:** If the input fields are empty or zero, the results section should display "0" or an instructional Empty State, such as "Fill in the measurements above to see the materials list".
+* **Behavior:** If the input fields are completely empty, the results section should display an instructional Empty State, such as "Fill in the measurements above to see the materials list". If there is partial input in Mode 1 (e.g., width and length provided, but missing thickness), display a distinct message: "Fill in all three dimensions to calculate".
 
 ### **FR-07: Data Export (Copy to Clipboard)**
 
