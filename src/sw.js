@@ -1,4 +1,4 @@
-const CACHE_NAME = 'concrete-calc-v1';
+const CACHE_NAME = 'concrete-calc-v3-raw';
 const ASSETS = [
     './',
     './index.html',

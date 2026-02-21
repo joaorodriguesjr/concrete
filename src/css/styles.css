@@ -1,40 +1,25 @@
 /* Concrete Mix Calculator - Design System */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 :root {
-    /* Colors - Base */
+    /* Colors - Brutalist Signal Palette */
+    --color-background: #F5F3EE;
+    --color-primary: hsl(38, 19%, 92%);
+    --color-accent: #E63B2E;
+    --color-dark: #111111;
     --color-white: #ffffff;
-    --color-black: #0f172a;
+    --color-gray-800: #1f2937;
 
-    /* Colors - Grays (Concrete theme) */
-    --color-gray-50: #f8fafc;
-    --color-gray-100: #f1f5f9;
-    --color-gray-200: #e2e8f0;
-    --color-gray-300: #cbd5e1;
-    --color-gray-400: #94a3b8;
-    --color-gray-500: #64748b;
-    --color-gray-600: #475569;
-    --color-gray-700: #334155;
-    --color-gray-800: #1e293b;
-    --color-gray-900: #0f172a;
-
-    /* Colors - Primary (Builder Blue) */
-    --color-primary-50: #eff6ff;
-    --color-primary-100: #dbeafe;
-    --color-primary-500: #3b82f6;
-    --color-primary-600: #2563eb;
-    --color-primary-700: #1d4ed8;
-
-    /* Colors - Semantic */
     --color-success: #10b981;
     --color-warning: #f59e0b;
     --color-error: #ef4444;
 
     /* Typography */
-    --font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-heading: 'Space Grotesk', system-ui, sans-serif;
+    --font-drama: 'DM Serif Display', serif;
+    --font-data: 'Space Mono', monospace;
+    --font-family-base: var(--font-heading);
 
-    /* Fluid font sizes */
+    /* Font Sizes */
     --text-xs: 0.75rem;
     --text-sm: 0.875rem;
     --text-base: 1rem;
@@ -60,95 +45,38 @@
     --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.1);
 
     /* Border Radius */
     --radius-sm: 0.375rem;
     --radius-base: 0.5rem;
     --radius-md: 0.75rem;
-    --radius-lg: 1rem;
-    --radius-xl: 1.5rem;
+    --radius-lg: 2rem;
+    --radius-xl: 3rem;
     --radius-full: 9999px;
 
     /* Transitions */
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-    /* === Semantic Tokens (Light Mode defaults) === */
-    --bg-page: var(--color-gray-50);
-    --bg-surface: var(--color-white);
-    --bg-surface-hover: var(--color-gray-50);
-    --bg-surface-active: var(--color-primary-50);
+    --transition-magnetic: transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-    --border-color: var(--color-gray-200);
-    --border-color-subtle: var(--color-gray-100);
-    --border-color-focus: var(--color-primary-500);
-    --border-color-active: var(--color-primary-500);
+    /* === Semantic Tokens === */
+    --bg-page: var(--color-background);
+    --bg-surface: var(--color-primary);
+    --bg-surface-hover: hsl(40, 16%, 89%);
+    --bg-surface-active: hsl(42, 14%, 86%);
 
-    --text-primary: var(--color-gray-900);
-    --text-secondary: var(--color-gray-600);
-    --text-muted: var(--color-gray-500);
-    --text-placeholder: var(--color-gray-400);
-    --text-on-primary: var(--color-white);
+    --border-color: rgba(17, 17, 17, 0.1);
+    --border-color-subtle: rgba(17, 17, 17, 0.05);
+    --border-color-focus: var(--color-accent);
+    --border-color-active: var(--color-accent);
 
-    --focus-ring: var(--color-primary-100);
-}
+    --text-primary: var(--color-dark);
+    --text-secondary: rgba(17, 17, 17, 0.8);
+    --text-muted: rgba(17, 17, 17, 0.6);
+    --text-placeholder: rgba(17, 17, 17, 0.4);
 
-/* Dark Mode via System Preference */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-page: var(--color-gray-900);
-        --bg-surface: var(--color-gray-800);
-        --bg-surface-hover: var(--color-gray-700);
-        --bg-surface-active: #1e3a5f;
-
-        --border-color: var(--color-gray-700);
-        --border-color-subtle: #243248;
-        --border-color-active: var(--color-primary-500);
-
-        --text-primary: var(--color-gray-50);
-        --text-secondary: var(--color-gray-400);
-        --text-muted: var(--color-gray-500);
-        --text-placeholder: var(--color-gray-600);
-
-        --focus-ring: rgba(59, 130, 246, 0.2);
-    }
-}
-
-/* Dark Mode via manual toggle ([data-theme="dark"] on <html>) */
-[data-theme="dark"] {
-    --bg-page: var(--color-gray-900);
-    --bg-surface: var(--color-gray-800);
-    --bg-surface-hover: var(--color-gray-700);
-    --bg-surface-active: #1e3a5f;
-
-    --border-color: var(--color-gray-700);
-    --border-color-subtle: #243248;
-    --border-color-active: var(--color-primary-500);
-
-    --text-primary: var(--color-gray-50);
-    --text-secondary: var(--color-gray-400);
-    --text-muted: var(--color-gray-500);
-    --text-placeholder: var(--color-gray-600);
-
-    --focus-ring: rgba(59, 130, 246, 0.2);
-}
-
-/* Light Mode override (explicit, reverts system dark preference) */
-[data-theme="light"] {
-    --bg-page: var(--color-gray-50);
-    --bg-surface: var(--color-white);
-    --bg-surface-hover: var(--color-gray-50);
-    --bg-surface-active: var(--color-primary-50);
-
-    --border-color: var(--color-gray-200);
-    --border-color-subtle: var(--color-gray-100);
-    --border-color-active: var(--color-primary-500);
-
-    --text-primary: var(--color-gray-900);
-    --text-secondary: var(--color-gray-600);
-    --text-muted: var(--color-gray-500);
-    --text-placeholder: var(--color-gray-400);
-
-    --focus-ring: var(--color-primary-100);
+    --focus-ring: rgba(230, 59, 46, 0.2);
 }
 
 /* ==========================================================================
@@ -194,13 +122,13 @@ p {
 }
 
 a {
-    color: var(--color-primary-600);
+    color: var(--color-accent);
     text-decoration: none;
     transition: color var(--transition-fast);
 }
 
 a:hover {
-    color: var(--color-primary-700);
+    color: #d13025;
 }
 
 img,
@@ -220,7 +148,22 @@ textarea {
 }
 
 /* ==========================================================================
-   Layout Components
+   Noise Overlay
+   ========================================================================== */
+
+.noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.05;
+}
+
+/* ==========================================================================
+   Layout
    ========================================================================== */
 
 #app {
@@ -229,298 +172,8 @@ textarea {
     padding: var(--space-4);
 }
 
-.grid-responsive {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--space-4);
-}
-
 /* ==========================================================================
-   Cards & Containers
-   ========================================================================== */
-
-.card {
-    background-color: var(--bg-surface);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    padding: var(--space-6);
-    margin-bottom: var(--space-6);
-    border: 1px solid var(--border-color);
-    transition: background-color var(--transition-base), border-color var(--transition-base);
-}
-
-.card-header {
-    margin-bottom: var(--space-4);
-    padding-bottom: var(--space-4);
-    border-bottom: 1px solid var(--border-color-subtle);
-}
-
-.card-title {
-    font-size: var(--text-lg);
-    color: var(--text-primary);
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-}
-
-/* ==========================================================================
-   Form Elements
-   ========================================================================== */
-
-.form-group {
-    margin-bottom: var(--space-4);
-}
-
-.form-label {
-    display: block;
-    font-size: var(--text-sm);
-    font-weight: 500;
-    color: var(--text-secondary);
-    margin-bottom: var(--space-2);
-}
-
-.form-input {
-    width: 100%;
-    padding: var(--space-3) var(--space-4);
-    font-size: var(--text-base);
-    color: var(--text-primary);
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    transition: all var(--transition-fast);
-    outline: none;
-}
-
-.form-input:focus {
-    border-color: var(--border-color-focus);
-    box-shadow: 0 0 0 3px var(--focus-ring);
-}
-
-.form-input::placeholder {
-    color: var(--text-placeholder);
-}
-
-/* ==========================================================================
-   Radio Cards (Mix Selection)
-   ========================================================================== */
-
-.radio-group {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--space-4);
-}
-
-.radio-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-4);
-    background-color: var(--bg-surface);
-    border: 2px solid var(--border-color);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: all var(--transition-base);
-    min-height: 48px;
-}
-
-.radio-card:hover {
-    border-color: var(--text-muted);
-    background-color: var(--bg-surface-hover);
-}
-
-.radio-card input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.radio-card:has(input[type="radio"]:focus-visible) {
-    outline: 2px solid var(--color-primary-500);
-    outline-offset: 2px;
-}
-
-.radio-card:has(input[type="radio"]:checked) {
-    border-color: var(--border-color-active);
-    background-color: var(--bg-surface-active);
-    box-shadow: 0 0 0 1px var(--border-color-active);
-}
-
-.radio-card-title {
-    font-weight: 600;
-    color: var(--text-primary);
-    font-size: var(--text-base);
-    margin-bottom: var(--space-1);
-}
-
-.radio-card-desc {
-    font-size: var(--text-sm);
-    color: var(--text-muted);
-}
-
-/* ==========================================================================
-   Buttons
-   ========================================================================== */
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
-    padding: var(--space-3) var(--space-6);
-    font-size: var(--text-base);
-    font-weight: 500;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    border: none;
-    background: none;
-    min-height: 48px;
-}
-
-.btn:focus-visible {
-    outline: 2px solid var(--color-primary-500);
-    outline-offset: 2px;
-}
-
-.btn-primary {
-    background-color: var(--color-primary-600);
-    color: var(--color-white);
-    box-shadow: var(--shadow-sm);
-}
-
-.btn-primary:hover {
-    background-color: var(--color-primary-700);
-}
-
-.btn-primary:active {
-    background-color: var(--color-primary-800);
-    transform: translateY(1px);
-}
-
-.btn-outline {
-    background-color: transparent;
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-}
-
-.btn-outline:hover {
-    background-color: var(--bg-surface-hover);
-    color: var(--text-primary);
-}
-
-.btn-outline:active {
-    background-color: var(--border-color);
-}
-
-.btn-full {
-    width: 100%;
-}
-
-/* ==========================================================================
-   Theme Toggle Button
-   ========================================================================== */
-
-.btn-theme-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    border-radius: var(--radius-full);
-    background: var(--bg-surface-hover);
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    flex-shrink: 0;
-}
-
-.btn-theme-toggle:hover {
-    background: var(--border-color);
-    color: var(--text-primary);
-}
-
-.btn-theme-toggle:focus-visible {
-    outline: 2px solid var(--color-primary-500);
-    outline-offset: 2px;
-}
-
-/* ==========================================================================
-   Materials List (Results)
-   ========================================================================== */
-
-.empty-state {
-    padding: var(--space-8) var(--space-4);
-    text-align: center;
-    color: var(--text-muted);
-    background-color: var(--bg-surface-hover);
-    border-radius: var(--radius-md);
-    border: 2px dashed var(--border-color-subtle);
-}
-
-.materials-grid {
-    list-style: none;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-3);
-}
-
-.material-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--space-4);
-    background-color: var(--bg-surface-hover);
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-color-subtle);
-}
-
-.material-label {
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-
-.material-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-}
-
-.material-subtext {
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-primary-600);
-}
-
-.material-value {
-    font-size: var(--text-xl);
-    font-weight: 700;
-    color: var(--color-primary-600);
-}
-
-[data-theme="dark"] .material-value {
-    color: var(--color-primary-500);
-}
-
-/* Tablet and Desktop - keep single column as per story_002, 
-   but maybe adjust spacing if needed. 
-   The #app max-width: 800px already handles large screens. */
-@media (min-width: 640px) {
-    .materials-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-.results-card {
-    border-left: 4px solid var(--color-success);
-}
-
-/* ==========================================================================
-   Header Layout (title + toggle side by side)
+   App Header
    ========================================================================== */
 
 .header-bar {
@@ -528,6 +181,65 @@ textarea {
     align-items: flex-start;
     justify-content: space-between;
     gap: var(--space-4);
+    padding-bottom: var(--space-8);
+}
+
+.app-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+}
+
+.app-title-icon {
+    color: var(--color-accent);
+    width: 24px;
+    height: 24px;
+    margin-left: -2px;
+}
+
+.app-subtitle {
+    font-size: var(--text-xs);
+    font-family: var(--font-data);
+    text-transform: uppercase;
+    letter-spacing: 0.075em;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Calc Sections
+   ========================================================================== */
+
+.calc-section {
+    padding: var(--space-8) 0;
+}
+
+#materials-list .calc-section:last-child {
+    padding-bottom: var(--space-4);
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.section-header {
+    margin-bottom: var(--space-6);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+}
+
+.section-icon {
+    color: var(--color-accent);
+    width: 24px;
+    height: 24px;
 }
 
 /* ==========================================================================
@@ -535,15 +247,14 @@ textarea {
    ========================================================================== */
 
 .mode-toggle-container {
-    margin-bottom: var(--space-6);
+    margin-top: var(--space-4);
     display: flex;
     justify-content: center;
 }
 
 .segmented-control {
     display: flex;
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border-color);
+    background-color: var(--bg-page);
     border-radius: var(--radius-full);
     padding: 2px;
     position: relative;
@@ -579,9 +290,8 @@ textarea {
     bottom: 2px;
     left: 2px;
     width: calc(50% - 2px);
-    background-color: var(--bg-surface-hover);
     border-radius: var(--radius-full);
-    border: 1px solid var(--border-color-subtle);
+    border: 1px solid var(--border-color-active);
     box-shadow: var(--shadow-sm);
     transition: transform var(--transition-base);
 }
@@ -590,11 +300,354 @@ textarea {
     transform: translateX(100%);
 }
 
-[data-theme="dark"] .segmented-control-bg {
-    background-color: var(--color-gray-700);
+/* ==========================================================================
+   Form Elements
+   ========================================================================== */
+
+.form-group {
+    margin-bottom: var(--space-0);
 }
 
-/* = [ Utilities ] = */
+.form-label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+}
+
+.form-input {
+    width: 100%;
+    padding: var(--space-3) 0;
+    font-size: var(--text-base);
+    font-family: var(--font-data);
+    color: var(--text-primary);
+    background-color: transparent;
+    border: none;
+    border-bottom: 1.5px solid var(--border-color);
+    border-radius: 0;
+    transition: border-color var(--transition-fast);
+    outline: none;
+}
+
+.form-input:focus {
+    border-bottom-color: var(--border-color-focus);
+}
+
+.form-input::placeholder {
+    color: var(--text-placeholder);
+}
+
+.form-input.invalid {
+    border-bottom-color: var(--color-error);
+}
+
+/* ==========================================================================
+   Radio Cards (Mix Selection)
+   ========================================================================== */
+
+.radio-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+}
+
+#dimensions-inputs .radio-group {
+    gap: var(--space-8);
+}
+
+.radio-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--bg-page);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: background-color var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base), transform var(--transition-base);
+    min-height: 48px;
+}
+
+.radio-card:hover {
+    border-color: var(--text-muted);
+    background-color: var(--bg-surface);
+    transform: scale(1.02);
+}
+
+.radio-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.radio-card:has(input[type="radio"]:focus-visible) {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+.radio-card:has(input[type="radio"]:checked) {
+    border-color: var(--bg-surface);
+    background-color: var(--bg-page);
+    box-shadow: 0 0 0 1px var(--border-color-active);
+}
+
+.radio-card-title {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: var(--text-base);
+    margin-bottom: var(--space-1);
+}
+
+.radio-card-desc {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Configuration Section
+   ========================================================================== */
+
+.config-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.config-input {
+    max-width: 100px;
+}
+
+.config-hint {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-8);
+    font-size: var(--text-lg);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: var(--transition-magnetic);
+    border: 1px solid var(--border-color);
+    background: var(--bg-surface);
+    min-height: 56px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover {
+    transform: scale(1.03);
+}
+
+.btn:disabled,
+.btn:disabled:hover {
+    background-color: var(--bg-surface);
+    color: var(--text-placeholder);
+    border: 2px dashed var(--border-color-subtle);
+    box-shadow: none;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+.btn-primary {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+    border-color: transparent;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+    background-color: #d13025;
+    transform: scale(1.03);
+}
+
+.btn-primary:active {
+    background-color: #b9261c;
+    transform: translateY(1px);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--bg-surface-hover);
+    color: var(--text-primary);
+}
+
+.btn-outline:active {
+    background-color: var(--border-color);
+}
+
+.btn-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* ==========================================================================
+   Results Actions
+   ========================================================================== */
+
+.results-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.results-actions .btn {
+    width: 100%;
+    max-width: 256px;
+}
+
+/* ==========================================================================
+   Materials List (Results)
+   ========================================================================== */
+
+.empty-state {
+    padding: var(--space-8) var(--space-4);
+    text-align: center;
+    color: var(--text-muted);
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-md);
+    border: 2px dashed var(--border-color-subtle);
+}
+
+.materials-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+}
+
+.material-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-4);
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color-subtle);
+}
+
+.material-label {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.material-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.material-subtext {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-accent);
+}
+
+.material-value {
+    font-size: var(--text-2xl);
+    font-family: var(--font-data);
+    font-weight: 700;
+    color: var(--color-accent);
+}
+
+@media (min-width: 640px) {
+    .materials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==========================================================================
+   Calculation Results Panel
+   ========================================================================== */
+
+.calculation-results {
+    display: none;
+}
+
+/* ==========================================================================
+   Section Transition Animations
+   ========================================================================== */
+
+/* Mobile: slide vertically */
+@keyframes section-enter-down {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-enter-right,
+.section-enter-left {
+    animation: section-enter-down var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Desktop: slide horizontally (mirrors the segmented control direction) */
+@keyframes section-enter-from-right {
+    from {
+        opacity: 0;
+        transform: translateX(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes section-enter-from-left {
+    from {
+        opacity: 0;
+        transform: translateX(-24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (min-width: 640px) {
+    .section-enter-right {
+        animation-name: section-enter-from-right;
+    }
+
+    .section-enter-left {
+        animation-name: section-enter-from-left;
+    }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
 .hidden {
     display: none !important;
 }
@@ -606,26 +659,25 @@ textarea {
     font-weight: 500;
 }
 
-.form-input.invalid {
-    border-color: var(--color-error);
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-}
+/* ==========================================================================
+   Toast Feedback
+   ========================================================================== */
 
-/* Toast Feedback */
 .toast {
     position: fixed;
-    bottom: var(--space-8);
+    top: var(--space-8);
     left: 50%;
-    transform: translateX(-50%) translateY(100px);
+    transform: translateX(-50%) translateY(-8px);
+    opacity: 0;
     background-color: var(--color-gray-800);
     color: var(--color-white);
     padding: var(--space-3) var(--space-6);
     border-radius: var(--radius-full);
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
     font-weight: 600;
     box-shadow: var(--shadow-lg);
     z-index: 1000;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.35, 1.55, 0.65, 1);
     pointer-events: none;
     display: flex;
     align-items: center;
@@ -633,9 +685,16 @@ textarea {
 }
 
 .toast.show {
+    opacity: 1;
     transform: translateX(-50%) translateY(0);
 }
 
-[data-theme="dark"] .toast {
-    background-color: var(--color-primary-600);
+.toast.hide {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-8px);
+}
+
+.toast-icon {
+    width: 18px;
+    height: 18px;
 }

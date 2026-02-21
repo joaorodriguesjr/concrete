@@ -19,13 +19,17 @@ function initApp() {
             const dimSection = document.getElementById('dimensions-inputs');
             const volSection = document.getElementById('volume-inputs');
 
-            if (mode === 'dimensions') {
-                dimSection.classList.remove('hidden');
-                volSection.classList.add('hidden');
-            } else {
-                dimSection.classList.add('hidden');
-                volSection.classList.remove('hidden');
-            }
+            // Dimensions → Volume: content enters from the right (same direction as the segmented pill)
+            // Volume → Dimensions: content enters from the left
+            const incoming = mode === 'dimensions' ? dimSection : volSection;
+            const outgoing = mode === 'dimensions' ? volSection : dimSection;
+            const enterClass = mode === 'dimensions' ? 'section-enter-left' : 'section-enter-right';
+
+            outgoing.classList.add('hidden');
+
+            incoming.classList.remove('hidden', 'section-enter-left', 'section-enter-right');
+            requestAnimationFrame(() => incoming.classList.add(enterClass));
+
             calculateAndRender();
         });
     });
@@ -175,7 +179,10 @@ function renderResults(results, inputs) {
         }
     }
 
-    if (results.hasVolume && !isPartial) {
+    const copyBtn = document.getElementById('copy-btn');
+    const hasResults = results.hasVolume && !isPartial;
+
+    if (hasResults) {
         resultsMsg.style.display = 'none';
         resultsPanel.style.display = 'block';
 
@@ -190,6 +197,10 @@ function renderResults(results, inputs) {
         resultsMsg.style.display = 'block';
         msgText.textContent = stateMessage || "Enter dimensions to see results.";
         resultsPanel.style.display = 'none';
+    }
+
+    if (copyBtn) {
+        copyBtn.disabled = !hasResults;
     }
 }
 
@@ -247,13 +258,20 @@ function showToast(message) {
         document.body.appendChild(toast);
     }
 
-    toast.innerHTML = `<i data-lucide="check-circle" style="width: 18px; height: 18px;"></i> ${message}`;
+    toast.innerHTML = `<i data-lucide="check-circle" class="toast-icon"></i> ${message}`;
     if (typeof lucide !== 'undefined') lucide.createIcons({ attrs: { 'data-lucide': 'check-circle' } });
 
+    // Clear any pending hide timer so rapid calls don't glitch
+    clearTimeout(toast._hideTimer);
+    toast.classList.remove('hide');
+    // Force reflow so the transition restarts if the toast was already visible
+    void toast.offsetWidth;
     toast.classList.add('show');
-    setTimeout(() => {
+
+    toast._hideTimer = setTimeout(() => {
+        toast.classList.add('hide');
         toast.classList.remove('show');
-    }, 2000);
+    }, 5000);
 }
 
 function calculateAndRender() {
@@ -269,11 +287,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Register Service Worker for PWA (story_011)
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js').then(registration => {
-                console.log('SW registered: ', registration);
-            }).catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
-            });
+            // navigator.serviceWorker.register('sw.js').then(registration => {
+            //     console.log('SW registered: ', registration);
+            // }).catch(registrationError => {
+            //     console.log('SW registration failed: ', registrationError);
+            // });
         });
     }
 

@@ -5,38 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Concrete Mix Calculator</title>
-    <!-- Prevent Flash of Unstyled Theme: runs before render -->
-    <script>
-        (function () {
-            const stored = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const theme = stored || (prefersDark ? 'dark' : 'light');
-            document.documentElement.setAttribute('data-theme', theme);
-        })();
-    </script>
+    <!-- Google Fonts for Brutalist Signal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2563eb">
+    <meta name="theme-color" content="#E63B2E">
 </head>
 
 <body>
+    <!-- Global Noise Filter -->
+    <svg class="noise-overlay">
+        <filter id="noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noise)" />
+    </svg>
+
     <div id="app">
-        <header class="card">
-            <div class="header-bar">
-                <div>
-                    <h1 class="card-title" style="margin-bottom: 0.5rem; font-size: var(--text-2xl);">
-                        <i data-lucide="calculator" style="color: var(--color-primary-600);"></i>
-                        Concrete Mix Calculator
-                    </h1>
-                    <p style="font-size: var(--text-sm);">Calculate materials needed for your project accurately.</p>
-                </div>
-                <button id="theme-toggle" class="btn-theme-toggle" aria-label="Toggle dark/light mode"
-                    title="Toggle dark/light mode">
-                    <i data-lucide="sun" id="theme-icon-light" style="width: 18px; height: 18px;"></i>
-                    <i data-lucide="moon" id="theme-icon-dark" style="width: 18px; height: 18px; display: none;"></i>
-                </button>
+        <header class="header-bar">
+            <div>
+                <h1 class="app-title">
+                    <i data-lucide="calculator" class="app-title-icon"></i>
+                    <span>Concrete Mix Calculator</span>
+                </h1>
+                <p class="app-subtitle">Get your exact mix instantly.</p>
             </div>
         </header>
 
@@ -55,41 +53,41 @@
                 </div>
 
                 <!-- Structure Type (story_001) -->
-                <section class="card">
-                    <div class="card-header">
-                        <h2 class="card-title">
-                            <i data-lucide="layers" style="color: var(--color-primary-500); width: 20px;"></i>
+                <section class="calc-section" id="structure-type">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i data-lucide="layers" class="section-icon"></i>
                             Structure Type
                         </h2>
                     </div>
                     <div class="radio-group" id="mix-selection">
                         <label class="radio-card">
                             <input type="radio" name="mix" value="high_strength" checked>
-                            <div class="radio-card-title">Slab / Pillar / Beam</div>
+                            <div class="radio-card-title">Slab • Pillar • Beam</div>
                             <div class="radio-card-desc">High strength (1 : 2 : 3)</div>
                         </label>
                         <label class="radio-card">
                             <input type="radio" name="mix" value="medium_strength">
-                            <div class="radio-card-title">Subfloor / Sidewalk</div>
+                            <div class="radio-card-title">Subfloor • Sidewalk</div>
                             <div class="radio-card-desc">Medium strength (1 : 3 : 4)</div>
                         </label>
                         <label class="radio-card">
                             <input type="radio" name="mix" value="foundation">
-                            <div class="radio-card-title">Foundation / Footing</div>
+                            <div class="radio-card-title">Foundation • Footing</div>
                             <div class="radio-card-desc">High strength (1 : 2.5 : 4)</div>
                         </label>
                     </div>
                 </section>
 
                 <!-- Dimensions Inputs (story_003) -->
-                <section class="card active-mode-section" id="dimensions-inputs">
-                    <div class="card-header">
-                        <h2 class="card-title">
-                            <i data-lucide="ruler" style="color: var(--color-primary-500); width: 20px;"></i>
+                <section class="calc-section" id="dimensions-inputs">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i data-lucide="ruler" class="section-icon"></i>
                             Dimensions
                         </h2>
                     </div>
-                    <div class="grid-responsive">
+                    <div class="radio-group">
                         <div class="form-group">
                             <label class="form-label" for="width">Width (m)</label>
                             <input type="number" id="width" class="form-input" inputmode="decimal" pattern="[0-9]*"
@@ -109,10 +107,10 @@
                 </section>
 
                 <!-- Direct Volume Input (story_004) -->
-                <section class="card hidden" id="volume-inputs">
-                    <div class="card-header">
-                        <h2 class="card-title">
-                            <i data-lucide="box" style="color: var(--color-primary-500); width: 20px;"></i>
+                <section class="calc-section hidden" id="volume-inputs">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i data-lucide="box" class="section-icon"></i>
                             Total Volume
                         </h2>
                     </div>
@@ -124,20 +122,19 @@
                 </section>
 
                 <!-- Configuration (story_005) -->
-                <section class="card">
-                    <div class="card-header">
-                        <h2 class="card-title">
-                            <i data-lucide="settings-2" style="color: var(--color-primary-500); width: 20px;"></i>
+                <section class="calc-section" id="configuration">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i data-lucide="settings-2" class="section-icon"></i>
                             Configuration
                         </h2>
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="waste-margin">Waste Margin (%)</label>
-                        <div style="display: flex; align-items: center; gap: var(--space-2);">
-                            <input type="number" id="waste-margin" class="form-input" value="10" inputmode="numeric"
-                                min="5" max="20" step="1" style="max-width: 100px;">
-                            <span style="font-size: var(--text-sm); color: var(--text-secondary);">Suggested: 5% to
-                                20%</span>
+                        <div class="config-row">
+                            <input type="number" id="waste-margin" class="form-input config-input" value="10"
+                                inputmode="numeric" min="5" max="20" step="1">
+                            <span class="config-hint">Suggested: 5% to 20%</span>
                         </div>
                         <p id="margin-error" class="error-text hidden">Margin must be between 5% and 20%</p>
                     </div>
@@ -146,10 +143,10 @@
 
             <!-- Panel 2: Materials List (Results) -->
             <div id="materials-list">
-                <section class="card results-card" id="results-panel">
-                    <div class="card-header">
-                        <h2 class="card-title">
-                            <i data-lucide="shopping-cart" style="color: var(--color-success); width: 20px;"></i>
+                <section class="calc-section" id="results-panel">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i data-lucide="shopping-cart" class="section-icon"></i>
                             Materials List
                         </h2>
                     </div>
@@ -158,7 +155,7 @@
                         <p id="results-msg-text">Enter dimensions to see results.</p>
                     </div>
 
-                    <div id="calculation-results" style="display: none;">
+                    <div id="calculation-results" class="calculation-results">
                         <ul class="materials-grid">
                             <li class="material-item">
                                 <div class="material-label">Cement (50kg bags)</div>
@@ -186,11 +183,11 @@
                     </div>
                 </section>
 
-                <section class="card">
-                    <button id="copy-btn" class="btn btn-primary btn-full">
-                        <i data-lucide="clipboard-copy" style="width: 20px;"></i> Copy Results
+                <div class="results-actions">
+                    <button id="copy-btn" class="btn btn-primary" disabled>
+                        <i data-lucide="clipboard-copy" class="btn-icon"></i> Copy Results
                     </button>
-                </section>
+                </div>
             </div>
         </main>
     </div>
@@ -203,47 +200,6 @@
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
-
-        // ---- Theme Toggle Logic ----
-        (function () {
-            const html = document.documentElement;
-            const btn = document.getElementById('theme-toggle');
-            const iconLight = document.getElementById('theme-icon-light');
-            const iconDark = document.getElementById('theme-icon-dark');
-            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-            function applyTheme(theme) {
-                html.setAttribute('data-theme', theme);
-                // Sun icon visible in dark mode (click to go light),
-                // Moon icon visible in light mode (click to go dark)
-                const isDark = theme === 'dark';
-                iconLight.style.display = isDark ? 'block' : 'none';
-                iconDark.style.display = isDark ? 'none' : 'block';
-            }
-
-            function getEffectiveTheme() {
-                return localStorage.getItem('theme') ||
-                    (mediaQuery.matches ? 'dark' : 'light');
-            }
-
-            // Apply correct icon state on load
-            applyTheme(getEffectiveTheme());
-
-            // Toggle on button click and persist choice
-            btn.addEventListener('click', function () {
-                const current = html.getAttribute('data-theme');
-                const next = current === 'dark' ? 'light' : 'dark';
-                localStorage.setItem('theme', next);
-                applyTheme(next);
-            });
-
-            // React to system preference change (only if user hasn't overridden)
-            mediaQuery.addEventListener('change', function (e) {
-                if (!localStorage.getItem('theme')) {
-                    applyTheme(e.matches ? 'dark' : 'light');
-                }
-            });
-        })();
     </script>
 </body>
 
