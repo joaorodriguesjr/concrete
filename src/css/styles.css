@@ -170,7 +170,7 @@ textarea {
 #app {
     max-width: 800px;
     margin: 0 auto;
-    padding: var(--space-4);
+    padding: var(--space-6);
 }
 
 /* ==========================================================================
@@ -192,7 +192,7 @@ textarea {
     font-family: var(--font-heading);
     font-size: var(--text-2xl);
     font-weight: 700;
-    margin-bottom: var(--space-2);
+    margin-bottom: var(--space-1);
 }
 
 .app-title-icon {
@@ -448,16 +448,15 @@ textarea {
     align-items: center;
     justify-content: center;
     gap: var(--space-2);
-    padding: var(--space-4) var(--space-8);
+    padding: var(--space-2) var(--space-8);
     font-size: var(--text-lg);
     font-family: var(--font-heading);
     font-weight: 700;
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-lg);
     cursor: pointer;
-    transition: var(--transition-magnetic);
+    transition: all var(--transition-fast);
     border: 1px solid var(--border-color);
     background: var(--bg-surface);
-    min-height: 56px;
     position: relative;
     overflow: hidden;
 }
@@ -479,7 +478,7 @@ textarea {
 
 .btn:focus-visible {
     outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
+    outline-offset: 4px;
 }
 
 .btn-primary {
@@ -489,14 +488,13 @@ textarea {
     box-shadow: var(--shadow-md);
 }
 
-.btn-primary:hover {
-    background-color: #d13025;
-    transform: scale(1.03);
+.btn-primary:hover,
+.btn-primary:focus-visible {
+    transform: scale(1.025);
 }
 
 .btn-primary:active {
-    background-color: #b9261c;
-    transform: translateY(1px);
+    transform: scale(0.975);
 }
 
 .btn-outline {
@@ -529,7 +527,6 @@ textarea {
 }
 
 .results-actions .btn {
-    width: 100%;
     max-width: 256px;
 }
 
@@ -582,7 +579,7 @@ textarea {
 }
 
 .material-value {
-    font-size: var(--text-2xl);
+    font-size: var(--text-xl);
     font-family: var(--font-data);
     font-weight: 700;
     color: var(--color-accent);
@@ -649,7 +646,7 @@ textarea {
     }
 }
 
-@media (min-width: 640px) {
+@media (min-width: 500px) {
     .section-enter-right {
         animation-name: section-enter-from-right;
     }
